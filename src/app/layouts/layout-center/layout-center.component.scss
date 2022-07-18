@@ -1,0 +1,26 @@
+app-layout-center {
+}
+
+.layout-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #ddd;
+
+
+  &__header {
+
+  }
+
+  &__section {
+    min-width: 400px;
+    width: 60%;
+    height: 100vh;
+    background-color: #fff;
+  }
+
+  &__footer {
+
+  }
+}
