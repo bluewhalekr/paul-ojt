@@ -1,18 +1,40 @@
-name: GitHub Actions TEST
-on: [push]
+name: deploy-manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'select deploy'
+        required: true
+        default: 'test1'
+
+env:
+  NODE_VERSION: 16.x
+  DEPLOY_TARGET: ${{ github.event.inputs.deploy }}
+  DEPLOY_BRANCH: ${{ github.ref_name }}
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
 jobs:
-  Explore-GitHub-Actions:
+  test1:
+    if: ${{ env.DEPLOY_TARGET == 'test1' }}
+    name: deploy test1
     runs-on: ubuntu-latest
     steps:
-      - run: echo " github.event_name -  ${{ github.event_name }}"
-      - run: echo " runner.os - ${{ runner.os }}"
-      - run: echo " github.ref - ${{ github.ref }}"
-      - run: echo " github.repository - ${{ github.repository }}"
-      - run: echo " github.ref_name - ${{ github.ref_name }}"
-      - run: echo " github.event.inputs.deploy-target - ${{ github.event.inputs.deploy-target }}"
-      - name: Check out repository code - actions/checkout@v3
-        uses: actions/checkout@v3
-      - name: List files in the repository
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.DEPLOY_BRANCH }}
+      - name: use node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: node version
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          node -v
+      - name: npm build
+        run: |
+          npm ci
+          npm run build
+      - name: firebase deploy
+        run: echo "fb token ${{ env.FIREBASE_TOKEN }}"
+      - run: echo "This job's status is ${{ job.status }}."
