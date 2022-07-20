@@ -16,7 +16,7 @@ env:
 
 jobs:
   test1:
-    if: ${{ env.DEPLOY_TARGET == 'test1' }}
+    if: ${{ github.event.inputs.deploy == 'test1' }}
     name: deploy test1
     runs-on: ubuntu-latest
     steps:
