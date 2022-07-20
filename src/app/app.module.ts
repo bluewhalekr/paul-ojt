@@ -6,11 +6,17 @@ import { LayoutCenterComponent } from '@layouts/layout-center/layout-center.comp
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TestComponent } from './components/test/test.component';
+import { DddComponent } from './components/ddd/ddd.component';
+import { TtttPipe } from './pipes/tttt.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutCenterComponent,
+    TestComponent,
+    DddComponent,
+    TtttPipe,
   ],
   imports: [
     RouterModule,
