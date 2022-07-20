@@ -7,6 +7,10 @@ on:
         description: 'select deploy'
         required: true
         default: 'test1'
+        type: choice
+        options:
+          - test1
+          - env-check
 
 env:
   NODE_VERSION: 16.x
@@ -38,3 +42,19 @@ jobs:
       - name: firebase deploy
         run: echo "fb token ${{ env.FIREBASE_TOKEN }}"
       - run: echo "This job's status is ${{ job.status }}."
+  env-check:
+    name: deploy test2
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo " github.event_name -  ${{ github.event_name }}"
+      - run: echo " runner.os - ${{ runner.os }}"
+      - run: echo " github.ref - ${{ github.ref }}"
+      - run: echo " github.repository - ${{ github.repository }}"
+      - run: echo " github.ref_name - ${{ github.ref_name }}"
+      - run: echo " github.event.inputs.deploy - ${{ github.event.inputs.deploy }}"
+      - name: Check out repository code - actions/checkout@v3
+        uses: actions/checkout@v3
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
