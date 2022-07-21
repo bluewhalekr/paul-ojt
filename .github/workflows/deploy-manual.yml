@@ -37,22 +37,28 @@ jobs:
       - name: node version
         run: |
           node -v
+      
+      - name: env test1
+        run: echo "${{ env.FIREBASE_TOKEN }}"
+      - name: env test2
+        run: echo "${{ env.FF }}"
+      - name: env test3
+        run: echo "$FF"
+        
+      - run: echo "This job's branch is ${{ job.branch }}"
+      - run: echo "this job event is ${{ job.event }}"
+      - name: test1 code
+        if: ${{ job.status == 'success' }}
+        run: echo "completed !!!!!"
+        
       - name: npm build
         run: |
           npm ci
           npm run build
-      - name: firebase deploy1
-        run: echo "${{ env.FIREBASE_TOKEN }}"
-      - name: firebase deploy2
-        run: echo "${{ env.FF }}"
-      - name: firebase deploy3
-        run: echo "$FF"
-        
-      - run: echo "This job's status is ${{ job.conclusion }}"
-      - run: echo "??? ${{ job.run_id }}"
-      - name: test1
-        if: ${{ job.status == 'completed' }}
-        run: echo "completed !!!!!"
+      - name: firebase deploy
+        run: |
+          npx firebase-tools deploy --token $FIREBASE_TOKEN --non-interactive --only hosting:aimmo-ojt -m "haha!"
+      
       - run: echo "This job's status is ${{ job.status }}."
   check-env:
     name: check-list
