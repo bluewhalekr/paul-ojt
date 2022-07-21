@@ -48,6 +48,11 @@ jobs:
       - name: firebase deploy3
         run: echo "$FF"
         
+      - run: echo "This job's status is ${{ job.conclusion }}"
+      - run: echo "??? ${{ job.run_id }}"
+      - name: test1
+        if: ${{ job.status == 'completed' }}
+        run: echo "completed !!!!!"
       - run: echo "This job's status is ${{ job.status }}."
   check-env:
     name: check-list
