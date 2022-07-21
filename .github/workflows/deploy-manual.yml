@@ -23,6 +23,8 @@ jobs:
     if: ${{ github.event.inputs.deploy == 'test1' }}
     name: deploy test1
     runs-on: ubuntu-latest
+    env:
+      FF: ${{ secrets.FIREBASE_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -39,8 +41,13 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: firebase deploy
-        run: echo "fb token ${{ env.FIREBASE_TOKEN }}"
+      - name: firebase deploy1
+        run: echo "${{ env.FIREBASE_TOKEN }}"
+      - name: firebase deploy2
+        run: echo "${{ env.FF }}"
+      - name: firebase deploy3
+        run: echo "$FF"
+        
       - run: echo "This job's status is ${{ job.status }}."
   check-env:
     name: check-list
