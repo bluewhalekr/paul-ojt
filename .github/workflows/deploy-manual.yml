@@ -70,7 +70,7 @@ jobs:
           npm ci
           npm run build
       - name: build check
-        if: ${{ always }}
+        if: ${{ always() }}
         run: echo "${{ steps.build.conclusion }}"
       - name: firebase deploy
         if: ${{ success() }}
@@ -81,7 +81,7 @@ jobs:
           --only hosting:aimmo-ojt 
           -m "${{ inputs.deploy-message }}"
       - name: failed!
-        if: ${{ faulure() }}
+        if: ${{ failure() }}
         run: echo "fffffff"
         
       - run: echo "This job's status is ${{ job.status }}."
