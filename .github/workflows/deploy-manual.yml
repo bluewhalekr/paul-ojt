@@ -11,6 +11,10 @@ on:
         options:
           - test1
           - check-env
+      deploy-message:
+        description: 'firebase deploy message -m'
+        required: false
+        type: string
 
 env:
   NODE_VERSION: 16.x
@@ -45,6 +49,14 @@ jobs:
       - name: env test3
         run: echo "$FF"
         
+      - name: gen-num
+        id: gen
+        run: echo "::set-output name=x::${{inputs.deploy}}"
+      - if: steps.gen.outputs.x == 'test1'
+        run: echo "test test"
+      - if: steps.gen.outputs.x == 'check-env'
+        run: echo "chekc env eheck env"
+        
       - run: echo "This job's branch is ${{ job.branch }}"
       - run: echo "this job event is ${{ job.event }}"
       - name: test1 code
@@ -52,13 +64,26 @@ jobs:
         run: echo "completed !!!!!"
         
       - name: npm build
+        id: build
+        continue-on-error: true
         run: |
           npm ci
           npm run build
+      - name: build check
+        if: ${{ always }}
+        run: echo "${{ steps.build.conclusion }}"
       - name: firebase deploy
+        if: ${{ success() }}
         run: |
-          npx firebase-tools deploy --token $FIREBASE_TOKEN --non-interactive --only hosting:aimmo-ojt -m "haha!"
-      
+          npx firebase-tools deploy 
+          --token $FIREBASE_TOKEN 
+          --non-interactive 
+          --only hosting:aimmo-ojt 
+          -m "${{ inputs.deploy-message }}"
+      - name: failed!
+        if: ${{ faulure() }}
+        run: echo "fffffff"
+        
       - run: echo "This job's status is ${{ job.status }}."
   check-env:
     name: check-list
