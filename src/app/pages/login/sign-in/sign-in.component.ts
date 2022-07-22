@@ -1,40 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../../auth/auth.service';
 
 
-const FG_STATUS = {
-  VALID: 'VALID',
-  INVALID: 'INVALID',
-  PENDING: 'PENDING',
-  DISABLED: 'DISABLED'
-} as const
-
-type T_FG_STATUS = keyof typeof FG_STATUS
-
+@AutoUnsubscribe()
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-  fg?: FormGroup;
+  service$?: Subscription;
 
   constructor(
-    private fb: FormBuilder
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.fg = this.fb.group({
-      id: ['', Validators.required],
-      password: ['', Validators.required]
-    })
   }
 
-  get canSubmit(): boolean {
-    return this.fg!.status === FG_STATUS.VALID
-  }
 
-  onSignIn() {
+  onSignIn(state: NgForm) {
+    const { email, password } = state.value
+
+    this.service$ = this.authService.signIn(email, password)
+      .subscribe((result) => {
+        console.log('in', result)
+        this.router.navigate(['dash-board'])
+      })
   }
 
 }

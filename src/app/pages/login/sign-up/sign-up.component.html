@@ -1,7 +1,67 @@
-<form
-  *ngIf="fg"
-  [formGroup]="fg"
-  class="sign-up"
->
+<div class="sign-up">
+  <header class="sign-up__header">
+    <h1>SIGN UP</h1>
+  </header>
+  <form
+    *ngIf="fg"
+    [formGroup]="fg"
+    class="sign-up__form"
+  >
+    <fieldset class="sign-up__fieldset">
+      <mat-form-field>
+        <mat-label>choose role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+        </mat-select>
 
-</form>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>PASSWORD</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          [inputRegexp]="'/\s/g'"
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>CONFIRM PASSWORD</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="confirmPassword"
+        >
+        <mat-error *ngIf="false">
+          비밀번호가 일치하지 않습니다.
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+
+    <footer class="sign-up__footer">
+      <button
+        mat-stroked-button
+        color="primary"
+        [disabled]="fg.invalid"
+        (click)="onSubmit()"
+      >
+        submit
+      </button>
+      <button
+        [routerLink]="['../sign-in']"
+        mat-stroked-button
+      >
+        cancel
+      </button>
+    </footer>
+  </form>
+
+</div>

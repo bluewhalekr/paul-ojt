@@ -1,21 +1,28 @@
 <form
-  *ngIf="fg"
-  [formGroup]="fg"
+  #state="ngForm"
   class="sign-in"
 >
   <fieldset class="sign-in__fieldset">
     <mat-form-field>
-      <mat-label>ID</mat-label>
+      <mat-label>Email</mat-label>
       <input
+        name="email"
         matInput
-        formControlName="id"
+        required
+        ngModel
       >
+      <mat-error *ngIf="false">
+        비밀번호가 일치하지 않습니다.
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>PASSWORD</mat-label>
       <input
+        name="password"
+        type="password"
         matInput
-        formControlName="password"
+        required
+        ngModel
       >
     </mat-form-field>
   </fieldset>
@@ -24,8 +31,8 @@
     <button
       mat-stroked-button
       color="primary"
-      [disabled]="!canSubmit"
-      (click)="onSignIn()"
+      [disabled]="state.invalid"
+      (click)="onSignIn(state)"
     >
       sign in
     </button>
