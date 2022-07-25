@@ -16,7 +16,7 @@ import { ERols } from '@pages/login/model/login.model';
 })
 export class SignUpComponent implements OnInit {
   public fg?: FormGroup;
-  private service?: Subscription;
+  private subscription?: Subscription;
   public readonly roles: string[] = Object.keys(ERols)
 
   constructor(
@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
   public onSubmit() {
     const { email, confirmPassword, password } = this.fg!.getRawValue()
     if (confirmPassword === password) {
-      this.service = this.authService.signUp(email, password)
+      this.subscription = this.authService.signUp(email, password)
         .subscribe((result) => {
           this.router.navigate(['dash-board'])
         })

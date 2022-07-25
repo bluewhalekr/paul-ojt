@@ -13,7 +13,7 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
-  private service?: Subscription;
+  private subscription?: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -23,7 +23,7 @@ export class SignInComponent {
   public onSignIn(state: NgForm) {
     const { email, password } = state.value
 
-    this.service = this.authService.signIn(email, password)
+    this.subscription = this.authService.signIn(email, password)
       .subscribe((result) => {
         this.router.navigate(['dash-board'])
       })
