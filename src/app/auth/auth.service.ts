@@ -26,13 +26,8 @@ export class AuthService {
 
   }
 
-  signUp<T>(email: string, password: string): Observable<UserCredential> {
+  signUp(email: string, password: string): Observable<UserCredential> {
     return defer(() => this.afAuth.createUserWithEmailAndPassword(email, password))
-      .pipe(
-        tap((result) => {
-          console.log('vvv', result)
-        })
-      )
   }
 
   signOut() {

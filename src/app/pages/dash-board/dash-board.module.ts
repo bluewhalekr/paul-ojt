@@ -12,10 +12,7 @@ import { SignInComponent } from '@pages/login/sign-in/sign-in.component';
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild([{
-      path: '',
-      component: DashBoardComponent
-    }]),
+    RouterModule.forChild([{ path: '', component: DashBoardComponent }]),
   ]
 })
 export class DashBoardModule { }

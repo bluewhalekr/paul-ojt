@@ -1,44 +1,22 @@
-<form
-  #state="ngForm"
-  class="sign-in"
->
+<form #state="ngForm" class="sign-in">
   <fieldset class="sign-in__fieldset">
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input
-        name="email"
-        matInput
-        required
-        ngModel
-      >
+      <input name="email" matInput required ngModel>
       <mat-error *ngIf="false">
         비밀번호가 일치하지 않습니다.
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>PASSWORD</mat-label>
-      <input
-        name="password"
-        type="password"
-        matInput
-        required
-        ngModel
-      >
+      <input name="password" type="password" matInput required ngModel>
     </mat-form-field>
   </fieldset>
 
   <footer class="sign-in__footer">
-    <button
-      mat-stroked-button
-      color="primary"
-      [disabled]="state.invalid"
-      (click)="onSignIn(state)"
-    >
+    <button mat-stroked-button color="primary" [disabled]="state.invalid" (click)="onSignIn(state)">
       sign in
     </button>
-    <button
-      [routerLink]="['../sign-up']"
-      mat-stroked-button
-    >sign up</button>
+    <button [routerLink]="['../sign-up']" mat-stroked-button>sign up</button>
   </footer>
 </form>

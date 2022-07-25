@@ -1,5 +1,4 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -41,7 +40,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     })
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
     // {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
     {provide: COMPOSITION_BUFFER_MODE, useValue: false},
   ],
