@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class InputRegexpDirective implements OnInit {
   @Input('inputRegexp') regexp: string = '';
-  ngControl$!: Subscription;
+  private nc!: Subscription;
 
   constructor(
     private el: ElementRef,
@@ -19,12 +19,11 @@ export class InputRegexpDirective implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.ngControl$ = this.ngControl.valueChanges!.pipe(
+    this.nc = this.ngControl.valueChanges!.pipe(
       map(x => x.replace(new RegExp(this.regexp), '')),
-      distinctUntilChanged((p, c) => p === c)
+      distinctUntilChanged()
     ).subscribe((result) => {
-      console.log('sss', result)
+      console.log('subscribe', result)
     })
   }
-
 }

@@ -15,10 +15,9 @@ import { ERols } from '@pages/login/model/login.model';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  fg?: FormGroup;
-  fg$?: Subscription;
-  service$?: Subscription;
-  readonly roles: string[] = Object.keys(ERols)
+  public fg?: FormGroup;
+  private service?: Subscription;
+  public readonly roles: string[] = Object.keys(ERols)
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +25,7 @@ export class SignUpComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.fg = this.fb.group({
       role: [ERols.CLIENT],
       email: ['', [Validators.required]],
@@ -35,10 +34,10 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  onSubmit() {
+  public onSubmit() {
     const { email, confirmPassword, password } = this.fg!.getRawValue()
     if (confirmPassword === password) {
-      this.service$ = this.authService.signUp(email, password)
+      this.service = this.authService.signUp(email, password)
         .subscribe((result) => {
           this.router.navigate(['dash-board'])
         })

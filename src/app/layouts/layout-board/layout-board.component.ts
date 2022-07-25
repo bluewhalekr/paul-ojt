@@ -5,6 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './layout-board.component.html',
   styleUrls: ['./layout-board.component.scss']
 })
-export class LayoutBoardComponent {
-  constructor() { }
-}
+export class LayoutBoardComponent { }

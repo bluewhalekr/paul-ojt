@@ -21,16 +21,16 @@ export class AuthService {
     })
   }
 
-  signIn(email: string, password: string): Observable<UserCredential> {
+  public signIn(email: string, password: string): Observable<UserCredential> {
     return defer(() => this.afAuth.signInWithEmailAndPassword(email, password))
 
   }
 
-  signUp(email: string, password: string): Observable<UserCredential> {
+  public signUp(email: string, password: string): Observable<UserCredential> {
     return defer(() => this.afAuth.createUserWithEmailAndPassword(email, password))
   }
 
-  signOut() {
+  public signOut() {
     return this.afAuth.signOut()
       .then(() => {
         this.router.navigate(['sign-in'])

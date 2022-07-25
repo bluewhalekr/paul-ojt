@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
@@ -12,24 +12,19 @@ import { AuthService } from '../../../auth/auth.service';
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
-  service$?: Subscription;
+export class SignInComponent {
+  private service?: Subscription;
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-  }
-
-
-  onSignIn(state: NgForm) {
+  public onSignIn(state: NgForm) {
     const { email, password } = state.value
 
-    this.service$ = this.authService.signIn(email, password)
+    this.service = this.authService.signIn(email, password)
       .subscribe((result) => {
-        console.log('in', result)
         this.router.navigate(['dash-board'])
       })
   }

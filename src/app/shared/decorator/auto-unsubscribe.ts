@@ -2,8 +2,6 @@ import { Subscription } from 'rxjs';
 
 export const AutoUnsubscribe = (blackList: string[] = []) => {
   return (constructor: any) => {
-    console.log('1', constructor)
-
     const ngOnDestroy = constructor.prototype.ngOnDestroy
 
     constructor.prototype.ngOnDestroy = function () {
