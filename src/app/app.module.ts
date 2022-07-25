@@ -11,7 +11,7 @@ import { LayoutCenterComponent } from '@layouts/layout-center/layout-center.comp
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './core/auth/auth.module';
 import { LayoutBoardComponent } from './layouts/layout-board/layout-board.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {

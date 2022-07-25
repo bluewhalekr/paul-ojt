@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
 import { catchError, forkJoin, of, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from '../../../auth/auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { ERols } from '@pages/login/model/login.model';
 
 
@@ -35,9 +35,9 @@ export class SignUpComponent implements OnInit {
   }
 
   public onSubmit() {
-    const { email, confirmPassword, password } = this.fg!.getRawValue()
+    const { confirmPassword, password } = this.fg!.getRawValue()
     if (confirmPassword === password) {
-      this.service = this.authService.signUp(email, password)
+      this.service = this.authService.signUp(this.fg!.getRawValue())
         .subscribe((result) => {
           this.router.navigate(['dash-board'])
         })

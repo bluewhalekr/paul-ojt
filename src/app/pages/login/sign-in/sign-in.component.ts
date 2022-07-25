@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 
 
 @AutoUnsubscribe()
