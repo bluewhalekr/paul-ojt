@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@core/auth/auth.service';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class UserInfoComponent implements OnInit {
   public fg!: FormGroup
-  private aaa!: Subscription;
+  private user!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -21,19 +21,15 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.fg = this.fb.group({
-      email: [''],
-      role: [''],
-      createAt: [''],
+      email: [{ value: '', disabled: true }],
+      role: [{ value: '', disabled: true }],
+      createAt: [{ value: '', disabled: true }],
     })
 
-    this.aaa = this.authService.ggg
+    this.user = this.authService.user
       .subscribe((result) => {
         this.fg.patchValue(result)
       })
-  }
-
-  onChangePassword() {
-
   }
 
   onLogout() {
