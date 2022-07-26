@@ -13,6 +13,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './core/auth/auth.module';
 import { LayoutBoardComponent } from './layouts/layout-board/layout-board.component';
+import { LayoutErrorComponent } from './layouts/layout-error/layout-error.component';
+import { NoticeBoardComponent } from './components/dash-board/notice-board/notice-board.component';
+import { HeaderComponent } from './components/dash-board/header/header.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -23,6 +26,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     LayoutCenterComponent,
     LayoutBoardComponent,
+    LayoutErrorComponent,
+    NoticeBoardComponent,
+    HeaderComponent,
   ],
   imports: [
     RouterModule,

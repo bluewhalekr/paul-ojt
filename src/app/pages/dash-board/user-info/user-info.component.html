@@ -1,0 +1,31 @@
+<form [formGroup]="fg" class="user-info">
+  <ul class="user-info__ul">
+    <li class="user-info__col">
+      <mat-form-field class="sign-up__roles-field">
+        <mat-label>email1</mat-label>
+        <input matInput formControlName="email" [disabled]="true">
+      </mat-form-field>
+    </li>
+    <li class="user-info__col">
+      <mat-form-field class="sign-up__roles-field">
+        <mat-label>role</mat-label>
+        <input matInput formControlName="role" [disabled]="false">
+      </mat-form-field>
+    </li>
+    <li class="user-info__col">
+      <mat-form-field class="sign-up__roles-field">
+        <mat-label>create at</mat-label>
+        <input matInput formControlName="createAt" [disabled]="true">
+      </mat-form-field>
+    </li>
+    <li class="user-info__col">
+      <button class="change-password"
+              mat-stroked-button color="primary"
+              (click)="onChangePassword()">비밀번호 변경</button>
+    </li>
+  </ul>
+  <footer class="user-info__footer">
+    <button mat-stroked-button color="primary" (click)="onLogout()">logout</button>
+    <button mat-stroked-button (click)="onWithdrawal">withdrawal</button>
+  </footer>
+</form>

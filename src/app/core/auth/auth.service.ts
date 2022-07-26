@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { deleteUser, getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase, AngularFireList, ChildEvent } from '@angular/fire/compat/database';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection, AngularFirestoreDocument,
+  DocumentData,
+  QuerySnapshot
+} from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { ERols } from '@pages/login/model/login.model';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
 import firebase from 'firebase/compat';
-import { catchError, defer, Observable, of, Subscription, tap } from 'rxjs';
-import { Iuser } from './auth.model';
+import { catchError, defer, find, Observable, of, Subject, Subscription, switchMap, tap } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { IreqUser, Iuser } from './auth.model';
 import UserCredential = firebase.auth.UserCredential;
+import UserInfo = firebase.UserInfo;
+import { format } from 'date-fns'
 
 @AutoUnsubscribe()
 @Injectable({
@@ -17,8 +23,9 @@ import UserCredential = firebase.auth.UserCredential;
 })
 export class AuthService {
 
-  private rolesDB!: AngularFirestoreCollection
-  private rolesWatch!: Subscription
+  private usersDB!: AngularFirestoreCollection;
+  private usersWatch!:Observable<DocumentData[]>;
+  private test:  AngularFirestoreDocument<unknown>
 
   constructor(
     private afStore: AngularFirestore,
@@ -30,31 +37,48 @@ export class AuthService {
       console.log('2', getAuth())
     })
 
+    this.usersDB = this.afStore.collection('users')
+    console.log('iiii', this.getUser)
+    this.usersWatch = this.usersDB.valueChanges()
+    this.test = this.afStore.doc('users')
+  }
 
-    this.rolesDB = this.afStore.collection('roles')
-    this.rolesWatch = this.rolesDB.valueChanges().subscribe((v) => {
-      console.log('www', v)
-    })
+  public get ggg(): Observable<Iuser> {
+    return this.afStore.collection<Iuser>('users', (ref) => ref.where('uid', '==', this.getUser.uid)).valueChanges().pipe(
+      map(x => x[0])
+    )
+  }
+  public get getUser(): UserInfo {
+    return getAuth().currentUser!
+  }
+
+  public get getRole() {
+    return this.usersDB.get()
   }
 
   public signIn(email: string, password: string): Observable<UserCredential> {
     return defer(() => this.afAuth.signInWithEmailAndPassword(email, password))
   }
 
-  public signUp({ role, email, password } : Iuser): Observable<UserCredential> {
+  public signUp({ role, email, password } : IreqUser): Observable<firebase.firestore.DocumentReference<DocumentData>> {
     return defer(() => this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
-      tap(({ user }) => {
-        this.afStore.collection('roles').add({ role, uid: user!.uid }).then((result) => {
-          console.log('sign up afstore', result)
+      switchMap(({ user }) => defer(() => {
+        console.log('@@', user)
+        return this.usersDB.add({
+          role,
+          uid: user!.uid,
+          email: user!.email,
+          createAt: format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
+          useActivate: true
         })
-      })
+      }))
     )
   }
 
   public signOut() {
     return this.afAuth.signOut()
       .then(() => {
-        this.router.navigate(['sign-in'])
+        this.router.navigate(['login','sign-in'])
       })
   }
 

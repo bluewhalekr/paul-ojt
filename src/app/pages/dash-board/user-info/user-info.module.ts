@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
-import { DirectivesModule } from '@shared/directives/directives.module';
-import { SignInComponent } from './sign-in.component';
+import { DashBoardComponent } from '@pages/dash-board/dash-board.component';
+import { UserInfoComponent } from './user-info.component';
+
+
 
 @NgModule({
   declarations: [
-    SignInComponent
+    UserInfoComponent
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    RouterModule.forChild([{ path: '', component: SignInComponent }]),
+    ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
-    DirectivesModule
+    RouterModule.forChild([{ path: '', component: UserInfoComponent }]),
   ]
 })
-export class SignInModule { }
+export class UserInfoModule { }

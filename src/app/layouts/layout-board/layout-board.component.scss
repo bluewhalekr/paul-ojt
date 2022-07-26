@@ -1,0 +1,27 @@
+.layout-board {
+
+  &__header {}
+
+  &__section {
+    display: flex;
+    align-items: stretch;
+    min-height: calc(100vh - var(--hf));
+  }
+
+  &__aside {
+    flex-basis: 200px;
+    background-color: #cfecff;
+    display: flex;
+    flex-direction: column;
+
+    .menu {
+      color: #027fbd;
+      text-shadow: #fff;
+    }
+
+    .active-link {
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+}
