@@ -5,11 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './notice-board.component.html',
   styleUrls: ['./notice-board.component.scss']
 })
-export class NoticeBoardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class NoticeBoardComponent {}

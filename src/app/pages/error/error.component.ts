@@ -6,14 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss']
 })
-export class ErrorComponent implements OnInit {
+export class ErrorComponent {
 
   constructor(
     private router: Router
   ) { }
-
-  ngOnInit(): void {
-  }
 
   onLink() {
     this.router.navigate(['login', 'sign-in']).then()
