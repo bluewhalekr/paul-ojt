@@ -8,11 +8,4 @@ import { Router } from '@angular/router';
 })
 export class ErrorComponent {
 
-  constructor(
-    private router: Router
-  ) { }
-
-  onLink() {
-    this.router.navigate(['login', 'sign-in']).then()
-  }
 }

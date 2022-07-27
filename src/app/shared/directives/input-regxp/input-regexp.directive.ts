@@ -6,11 +6,12 @@ import { map } from 'rxjs/operators';
 
 @AutoUnsubscribe()
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[inputRegexp]'
 })
 export class InputRegexpDirective implements OnInit {
-  @Input('inputRegexp') regexp: string = '';
-  private nc!: Subscription;
+  @Input('inputRegexp') regexp = '';
+  private ncSubscription!: Subscription;
 
   constructor(
     private el: ElementRef,
@@ -18,12 +19,13 @@ export class InputRegexpDirective implements OnInit {
     private ngControl: NgControl
   ) { }
 
-  public ngOnInit() {
-    this.nc = this.ngControl.valueChanges!.pipe(
+  public ngOnInit(): void {
+    // tslint:disable-next-line:no-non-null-assertion
+    this.ncSubscription = this.ngControl.valueChanges!.pipe(
       map(x => x.replace(new RegExp(this.regexp), '')),
       distinctUntilChanged()
-    ).subscribe((result) => {
-      console.log('subscribe', result)
-    })
+    ).subscribe(result => {
+      console.log('subscribe', result);
+    });
   }
 }

@@ -1,8 +1,8 @@
-import { Subscription } from 'rxjs';
+import { forkJoin, Subject, Subscription, takeUntil } from 'rxjs';
 
 export const AutoUnsubscribe = (blackList: string[] = []) => {
   return (constructor: any) => {
-    const ngOnDestroy = constructor.prototype.ngOnDestroy
+    const ngOnDestroy = constructor.prototype.ngOnDestroy;
 
     constructor.prototype.ngOnDestroy = function () {
       for (let [key, value] of Object.entries(this)) {
@@ -11,9 +11,7 @@ export const AutoUnsubscribe = (blackList: string[] = []) => {
         }
       }
 
-      ngOnDestroy &&
-      typeof ngOnDestroy === 'function' &&
-      ngOnDestroy.apply(this. arguments)
+      ngOnDestroy && typeof ngOnDestroy === "function" && ngOnDestroy.apply(this, arguments);
     }
   }
 }

@@ -17,12 +17,12 @@ export class AuthGuard implements CanActivate {
 
   canActivate({ routeConfig }: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.afAuth.authState.pipe(
-      map((user) => {
+      map(user => {
         if (user?.refreshToken) {
-          return true
+          return true;
         } else {
-          this.router.navigate(['login', 'sign-in']).then()
-          return false
+          this.router.navigate(['login', 'sign-in']).then();
+          return false;
         }
       })
     );
