@@ -28,6 +28,8 @@
       "@pages/*": ["src/app/pages/*"],
       "@shared/*": ["src/app/shared/*"],
       "@components/*": ["src/app/components/*"],
+      "@functools/*": ["src/app/functools/*"],
+      "@environments/*": ["src/environments/*"]
     }
   },
   "angularCompilerOptions": {

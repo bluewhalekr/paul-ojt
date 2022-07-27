@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { DirectivesModule } from '@shared/directives/directives.module';
 import { SignInComponent } from './sign-in.component';
 
 
@@ -14,17 +15,14 @@ import { SignInComponent } from './sign-in.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
     RouterModule.forChild([{
       path: '',
       component: SignInComponent
     }]),
     MatButtonModule,
     MatInputModule,
+    DirectivesModule
   ]
 })
-export class SignInModule {
-  constructor() {
-    console.log('?????? sign in module')
-  }
-}
+export class SignInModule { }

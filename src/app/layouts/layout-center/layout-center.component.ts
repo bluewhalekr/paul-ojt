@@ -5,11 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './layout-center.component.html',
   styleUrls: ['./layout-center.component.scss']
 })
-export class LayoutCenterComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class LayoutCenterComponent {}

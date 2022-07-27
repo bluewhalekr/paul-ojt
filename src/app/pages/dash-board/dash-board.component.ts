@@ -5,11 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.scss']
 })
-export class DashBoardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class DashBoardComponent { }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LayoutBoardComponent } from '@layouts/layout-board/layout-board.component';
 import { LayoutCenterComponent } from '@layouts/layout-center/layout-center.component';
 
 const routes: Routes = [
@@ -27,18 +28,18 @@ const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'dash-board',
-  //   component: BoardComponent,
-  //   children: [
-  //     {
-  //       path: '', loadChildren: () => import('@pages/dash-board/dash-board.module').then(m => m.DashBoardModule)
-  //     },
-  //     {
-  //       path: ':id', loadChildren:() => import('@pages/dash-board/dash-board-id/dash-board-id.module').then(m => m.DashBoardIdModule)
-  //     }
-  //   ]
-  // }
+  {
+    path: 'dash-board',
+    component: LayoutBoardComponent,
+    children: [
+      {
+        path: '', loadChildren: () => import('@pages/dash-board/dash-board.module').then(m => m.DashBoardModule)
+      },
+      {
+        path: ':id', loadChildren:() => import('@pages/dash-board/dash-board-id/dash-board-id.module').then(m => m.DashBoardIdModule)
+      }
+    ]
+  }
 ];
 
 @NgModule({
