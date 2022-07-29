@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   selector: '[inputRegexp]'
 })
 export class InputRegexpDirective implements OnInit {
-  @Input('inputRegexp') regexp = '';
+  @Input('inputRegexp') public regexp = '';
   private ncSubscription!: Subscription;
 
   constructor(

@@ -1,8 +1,10 @@
 .layout-board {
+  width: 100%;
 
   &__header {}
 
   &__section {
+    width: inherit;
     display: flex;
     align-items: stretch;
     min-height: calc(100vh - var(--hf));

@@ -5,6 +5,7 @@ import { LayoutBoardComponent } from '@layouts/layout-board/layout-board.compone
 import { LayoutCenterComponent } from '@layouts/layout-center/layout-center.component';
 import { LayoutErrorComponent } from '@layouts/layout-error/layout-error.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -35,15 +36,8 @@ const routes: Routes = [
     component: LayoutBoardComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: '', loadChildren: () => import('@pages/dash-board/dash-board.module').then(m => m.DashBoardModule)
-      },
-      {
-        path: 'user-info', loadChildren: () => import('@pages/dash-board/user-info/user-info.module').then(m => m.UserInfoModule)
-      },
-      {
-        path: ':id', loadChildren:() => import('@pages/dash-board/dash-board-id/dash-board-id.module').then(m => m.DashBoardIdModule)
-      }
+      { path: '', loadChildren: () => import('@pages/dash-board/dash-board.module').then(m => m.DashBoardModule) },
+      { path: 'user-info', loadChildren: () => import('@pages/dash-board/user-info/user-info.module').then(m => m.UserInfoModule) }
     ]
   },
   {

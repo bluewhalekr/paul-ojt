@@ -21,4 +21,6 @@ import { UserInfoComponent } from './user-info.component';
     RouterModule.forChild([{ path: '', component: UserInfoComponent }]),
   ]
 })
-export class UserInfoModule { }
+
+export class UserInfoModule {
+}

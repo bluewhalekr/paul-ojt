@@ -29,9 +29,7 @@ export class UserInfoComponent implements OnInit {
     });
 
     this.userSubscription = this.authService.user$
-      .subscribe(result => {
-        this.fg.patchValue(result);
-      });
+      .subscribe(result => this.fg.patchValue(result));
   }
 
   public onLogout(): void {

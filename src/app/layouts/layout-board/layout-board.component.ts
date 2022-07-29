@@ -10,7 +10,7 @@ import { forkJoin, Subscription, takeUntil } from 'rxjs';
   styleUrls: ['./layout-board.component.scss']
 })
 export class LayoutBoardComponent implements AfterViewInit {
-  @ViewChild('header', { static: true }) header!: ElementRef;
+  @ViewChild('header', { static: true }) public header!: ElementRef;
   private serviceSignoutSubscription!: Subscription;
 
   constructor(

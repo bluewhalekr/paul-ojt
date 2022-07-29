@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
 import firebase from 'firebase/compat';
-import { catchError, defer, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { catchError, defer, exhaustMap, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IReqUser, IUser } from './auth.model';
 import UserCredential = firebase.auth.UserCredential;
@@ -31,12 +31,20 @@ export class AuthService {
     private afDB: AngularFireDatabase,
     private router: Router
   ) {
-    this.afAuth.authState.subscribe(user => {
-      console.log('auth user', user);
-    });
+    this.afAuth.authState.subscribe(user => console.log('auth user', user));
 
     this.usersDB = this.afStore.collection('users');
     this.usersWatch = this.usersDB.valueChanges();
+  }
+
+  public findUser(uid: string): Observable<IUser> {
+    return this.afStore.collection<IUser>('users', (ref) => ref.where('uid', '==', uid)).valueChanges().pipe(
+      map(result => result[0])
+    );
+  }
+
+  public get userList$(): Observable<IUser[]> {
+    return this.afStore.collection<IUser>('users').valueChanges();
   }
 
   public get user$(): Observable<IUser> {
@@ -77,17 +85,14 @@ export class AuthService {
   }
 
   public deleteUser(): Observable<unknown> {
+    const uid = this.getUser.uid;
     return defer(() => deleteUser(this.getUser)).pipe(
-      tap(() => {
-        defer(() => this.usersDB.ref.where('uid', '==', this.getUser.uid).get()).pipe(
-          tap(qSnapshot => {
-            qSnapshot.forEach(doc => {
-              doc.ref.update({ useActivate: false }).then();
-            });
-          })
-        );
+      exhaustMap(() => this.usersDB.ref.where('uid', '==', uid).get()),
+      exhaustMap(qSnapshot => {
+        qSnapshot.forEach(doc =>  doc.ref.update({ useActivate: false }));
+        return of(true);
       }),
-      switchMap(() => this.router.navigate(['login', 'sign-in']))
+      exhaustMap(() => this.router.navigate(['login', 'sign-in']))
     );
   }
 }

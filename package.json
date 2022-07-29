@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:dev": "ng build -c dev",
+
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -25,6 +27,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "date-fns": "^2.29.1",
     "firebase": "^9.9.0",
+    "js-cookie": "^3.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
