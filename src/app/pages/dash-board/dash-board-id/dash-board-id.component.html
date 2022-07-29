@@ -1,1 +1,25 @@
-<p>dash-board-id works!</p>
+<form class="dash-board-detail" [formGroup]="fg">
+  <header class="dash-board-detail__header" [title]="(boardDetail$ | async)?.title">
+    <input type="text" formControlName="title">
+  </header>
+  <section class="dash-board-detail__content">
+    <textarea formControlName="content"></textarea>
+  </section>
+  <section *ngIf="type === BORDER_TYPE.DETAIL" class="dash-board-detail__comment">
+    <ul class="dash-board-detail__comment-ul">
+      <li class="comment">댓글 1</li>
+      <ul class="dash-board-detail__comment-ul">
+        <li class="comment">댓글 2</li>
+      </ul>
+    </ul>
+  </section>
+  <footer [ngSwitch]="type">
+    {{ type }}
+    <button *ngSwitchCase="BORDER_TYPE.CREATE" mat-stroked-button color="primary" (click)="onCreate()">생성</button>
+    <button *ngSwitchCase="BORDER_TYPE.MODIFY" mat-stroked-button color="primary" (click)="onApply()">적용</button>
+    <ng-container *ngSwitchDefault>
+      <button mat-stroked-button color="primary" (click)="onModify()">수정</button>
+      <button mat-stroked-button color="primary" (click)="onDelete()">삭제</button>
+    </ng-container>
+  </footer>
+</form>

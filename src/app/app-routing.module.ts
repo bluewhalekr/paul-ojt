@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@core/guard/auth-guard';
 import { LayoutBoardComponent } from '@layouts/layout-board/layout-board.component';
 import { LayoutCenterComponent } from '@layouts/layout-center/layout-center.component';
+import { LayoutErrorComponent } from '@layouts/layout-error/layout-error.component';
+
 
 const routes: Routes = [
   {
@@ -31,15 +34,17 @@ const routes: Routes = [
   {
     path: 'dash-board',
     component: LayoutBoardComponent,
+    canActivate: [AuthGuard],
     children: [
-      {
-        path: '', loadChildren: () => import('@pages/dash-board/dash-board.module').then(m => m.DashBoardModule)
-      },
-      {
-        path: ':id', loadChildren:() => import('@pages/dash-board/dash-board-id/dash-board-id.module').then(m => m.DashBoardIdModule)
-      }
+      { path: '', loadChildren: () => import('@pages/dash-board/dash-board.module').then(m => m.DashBoardModule) },
+      { path: 'user-info', loadChildren: () => import('@pages/dash-board/user-info/user-info.module').then(m => m.UserInfoModule) }
     ]
-  }
+  },
+  {
+    path: '**',
+    component: LayoutErrorComponent,
+    loadChildren: () => import('@pages/error/error.module').then(m => m.ErrorModule)
+  },
 ];
 
 @NgModule({

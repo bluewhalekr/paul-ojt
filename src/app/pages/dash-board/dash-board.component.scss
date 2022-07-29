@@ -1,0 +1,15 @@
+
+.dash-board {
+  width: 100%;
+  flex: 1;
+
+  &__article {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    @supports (row-gap: 10px) {
+      row-gap: 10px;
+    }
+  }
+}

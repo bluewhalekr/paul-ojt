@@ -1,1 +1,10 @@
-<p>dash-board works!</p>
+<div class="dash-board">
+  <header>
+    <button mat-stroked-button color="primary" [routerLink]="['./create']">
+      create
+    </button>
+  </header>
+  <article class="dash-board__article">
+    <app-feed *ngFor="let item of service.boardList | async" [attr.data-index]="item.id" [item]="item" [routerLink]="['detail', item.id]"></app-feed>
+  </article>
+</div>

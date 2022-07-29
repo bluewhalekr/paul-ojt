@@ -44,3 +44,6 @@ Thumbs.db
 # Firebase files
 firebase-debug.log
 /.firebase
+
+# Design files
+ui-debug.log

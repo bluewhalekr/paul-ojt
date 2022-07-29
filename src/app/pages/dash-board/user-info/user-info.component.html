@@ -1,0 +1,26 @@
+<form [formGroup]="fg" class="user-info">
+  <ul class="user-info__ul">
+    <li class="user-info__col">
+      <mat-form-field class="sign-up__roles-field">
+        <mat-label>email1</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </li>
+    <li class="user-info__col">
+      <mat-form-field class="sign-up__roles-field">
+        <mat-label>role</mat-label>
+        <input matInput formControlName="role">
+      </mat-form-field>
+    </li>
+    <li class="user-info__col">
+      <mat-form-field class="sign-up__roles-field">
+        <mat-label>create at</mat-label>
+        <input matInput formControlName="createAt">
+      </mat-form-field>
+    </li>
+  </ul>
+  <footer class="user-info__footer">
+    <button mat-stroked-button color="primary" (click)="onLogout()">logout</button>
+    <button mat-stroked-button (click)="onWithdrawal()">withdrawal</button>
+  </footer>
+</form>

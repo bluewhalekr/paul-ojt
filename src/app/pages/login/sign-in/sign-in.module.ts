@@ -7,8 +7,6 @@ import { RouterModule } from '@angular/router';
 import { DirectivesModule } from '@shared/directives/directives.module';
 import { SignInComponent } from './sign-in.component';
 
-
-
 @NgModule({
   declarations: [
     SignInComponent
@@ -16,10 +14,7 @@ import { SignInComponent } from './sign-in.component';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{
-      path: '',
-      component: SignInComponent
-    }]),
+    RouterModule.forChild([{ path: '', component: SignInComponent }]),
     MatButtonModule,
     MatInputModule,
     DirectivesModule

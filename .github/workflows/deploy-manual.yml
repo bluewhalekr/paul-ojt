@@ -9,7 +9,8 @@ on:
         default: 'test1'
         type: choice
         options:
-          - test1
+          - dev
+          - prod
           - check-env
       deploy-message:
         description: 'firebase deploy message -m'
@@ -23,8 +24,8 @@ env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
 jobs:
-  test1:
-    if: ${{ github.event.inputs.deploy == 'test1' }}
+  dev:
+    if: ${{ github.event.inputs.deploy == 'dev' }}
     name: deploy test1
     runs-on: ubuntu-latest
     env:
@@ -41,14 +42,14 @@ jobs:
       - name: node version
         run: |
           node -v
-      
+
       - name: env test1
         run: echo "${{ env.FIREBASE_TOKEN }}"
       - name: env test2
         run: echo "${{ env.FF }}"
       - name: env test3
         run: echo "$FF"
-        
+
       - name: gen-num
         id: gen
         run: echo "::set-output name=x::${{inputs.deploy}}"
@@ -56,13 +57,13 @@ jobs:
         run: echo "test test"
       - if: steps.gen.outputs.x == 'check-env'
         run: echo "chekc env eheck env"
-        
+
       - run: echo "This job's branch is ${{ job.branch }}"
       - run: echo "this job event is ${{ job.event }}"
       - name: test1 code
         if: ${{ job.status == 'success' }}
         run: echo "completed !!!!!"
-        
+
       - name: npm build
         id: build
         continue-on-error: true
@@ -75,11 +76,48 @@ jobs:
       - name: firebase deploy
         if: ${{ success() }}
         run: |
-          npx firebase-tools deploy --token $FIREBASE_TOKEN --non-interactive --only hosting:aimmo-ojt -m "${{ inputs.deploy-message }}"
+          npx firebase-tools deploy --token $FIREBASE_TOKEN --non-interactive --only hosting:dev -m "${{ inputs.deploy-message }}"
       - name: failed!
         if: ${{ failure() }}
         run: echo "실패 했습니다!"
-        
+
+      - run: echo "This job's status is ${{ job.status }}."
+  prpd:
+    if: ${{ github.event.inputs.deploy == 'dev' }}
+    name: deploy prod
+    runs-on: ubuntu-latest
+    env:
+      FF: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.DEPLOY_BRANCH }}
+      - name: use node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: node version
+        run: |
+          node -v
+
+      - name: npm build
+        id: build
+        continue-on-error: true
+        run: |
+          npm ci
+          npm run build
+      - name: build check
+        if: ${{ always() }}
+        run: echo "${{ steps.build.conclusion }}"
+      - name: firebase deploy
+        if: ${{ success() }}
+        run: |
+          npx firebase-tools deploy --token $FIREBASE_TOKEN --non-interactive --only hosting:prod -m "${{ inputs.deploy-message }}"
+      - name: failed!
+        if: ${{ failure() }}
+        run: echo "실패 했습니다!"
+
       - run: echo "This job's status is ${{ job.status }}."
   check-env:
     name: check-list

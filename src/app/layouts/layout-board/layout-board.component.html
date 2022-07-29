@@ -1,11 +1,13 @@
 <main class="layout-board">
-  <header class="layout-board__header">
-    header
+  <header class="layout-board__header" #header>
+    <button (click)="onLogout()">logout</button>
   </header>
   <section class="layout-board__section">
+    <aside class="layout-board__aside"
+           routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a [routerLink]="['./']" class="menu">dash board</a>
+      <a [routerLink]="['./user-info']" class="menu">user info</a>
+    </aside>
     <router-outlet></router-outlet>
   </section>
-  <footer class="layout-board__footer">
-    footer
-  </footer>
 </main>

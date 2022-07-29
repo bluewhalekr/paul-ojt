@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '@environments/environment';
 import { AuthService } from './auth.service';
 
@@ -13,6 +14,7 @@ import { AuthService } from './auth.service';
     CommonModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     AngularFireDatabaseModule,
   ],
   providers: [AuthService]

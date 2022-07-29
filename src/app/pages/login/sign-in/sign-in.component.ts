@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from '@shared/decorator/auto-unsubscribe';
+import { test } from '@shared/decorator/test';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 
 
 @AutoUnsubscribe()
@@ -13,20 +14,19 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
-  private subscription?: Subscription;
+  public subscription?: Subscription;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) { }
 
-  public onSignIn(state: NgForm) {
-    const { email, password } = state.value
+  public onSignIn(state: NgForm): void {
+    const { email, password } = state.value;
 
     this.subscription = this.authService.signIn(email, password)
-      .subscribe((result) => {
-        this.router.navigate(['dash-board'])
-      })
+      .subscribe(result => {
+        this.router.navigate(['dash-board']).then();
+      });
   }
-
 }

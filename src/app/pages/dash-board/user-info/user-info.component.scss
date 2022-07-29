@@ -1,0 +1,22 @@
+.user-info {
+
+  &__ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__col {
+    flex: 1 1 40%;
+    list-style: none;
+    display: inline-block;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+
+    @supports (column-gap: 10px) {
+      column-gap: 10px;
+    }
+  }
+}
